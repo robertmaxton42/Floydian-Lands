@@ -9,18 +9,23 @@
 
 header {
 	height: 50px;
-	align-content: bottom;
 }
 
 nav {
-	justify-content: center;
+	text-align: center;
+	color: #BBB
 }
 
 #gargoyle {
 	background-color: #FFF;
-	justify-content: center;
 	float: left;
 	width:66%;
+}
+
+#gargoyle img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #chat {

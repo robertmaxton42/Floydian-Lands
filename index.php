@@ -33,11 +33,10 @@
             name = "Guest";
         }
 
-        //strip tags
-        name = name.replace(/(<([^>]+)>)/ig,"");
 
-        //display name on page
-        $("$username").html("You are: <span id='username>" + name + "</span>");
+        //display name on page (sanitized)
+        $("$username").html("You are: <span id='username></span>");
+        $("$username span").text(name)
 
         //start chat
         var chat = new Chat();

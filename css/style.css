@@ -31,7 +31,21 @@ nav {
 #chat {
     background-color: #999;
     float: right;
+    font-family: Verdana, sans-serif;
     width: 33%;
+    height: 100%;
+}
+
+#name-area {
+    background-color: #000;
+    color: #FFF;
+    font-weight: 1000;
+    float: right;
+}
+
+#chat-area {
+    background-color: #BBB;
+    border: 3px inset black;
 }
 
 #command {

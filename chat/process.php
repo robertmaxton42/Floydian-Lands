@@ -4,6 +4,8 @@
 
     $log = array();
 
+    echo "<script type='text/javascript'>alert('Really annoying pop-up!');</script>";
+
     switch ($function) {
         #Evaluate getStateOfChat()
         case('getState'):             #If the chat log already exists, return the number of lines in the log.             #Otherwise, return array init (zero)

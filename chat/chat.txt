@@ -6,4 +6,6 @@
 <span>Guest</span>        
 <span>Kenrick</span>dwwd 
 <span>Guest</span>test  
-<span>Guest</span>test234  
+<span>Guest</span>test234  <span id='chat-message'>Guest</span>asdf 
+<span id='chat-message'>Guest</span>asdf 
+<span id='chat-message'>Guest</span>asdf 

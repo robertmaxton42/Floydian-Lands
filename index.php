@@ -11,83 +11,78 @@
 
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-
-    <style>
-        body {font-family: Verdana, sans-serif; font-size:0.8em;}
-        header,nav, section,article,footer
-        {border:1px solid grey; margin:5px; padding:8px;}
-        nav ul {margin:0; padding:0;}
-        nav ul li {display:inline; margin:5px;}
-    </style>
-
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-    <script type="text/javascript" src="chat/chat.js"></script>
+    <script type="text/javascript" src="chat.js"></script>
     <script type="text/javascript">
+        $("document").ready(function(){
 
-        //ask user for name with popup prompt
-        var name = prompt("Enter your chat name:", "Guest");
+            //ask user for name with popup prompt
+            var name = prompt("Enter your chat name:", "Guest");
 
-        //default name is 'Guest'
-        //TODO random unique username generation
-        if (!name || name === ' ') {
-            name = "Guest";
-        }
+            //default name is 'Guest'
+            //TODO random unique username generation
+            if (!name || name === ' ') {
+                name = "Guest";
+            }
 
-        //strip tags
-        name = name.replace(/(<([^>]+)>)/ig,"");
+            //strip tags
+            name = name.replace(/(<([^>]+)>)/ig,"");
 
-        //display name on page
-        $("$username").html("You are: <span id='username>" + name + "</span>");
+            //display name on page
+            $("#name-area").html("You are: <span id='username'>" + name + "</span>");
 
-        //start chat
-        var chat = new Chat();
+            //start chat
+            var chat = new Chat();
 
-        $(function() {
+            $(function() {
 
-            chat.getState();
+                chat.getState();
 
-            // watch textarea for key presses
-            // TODO 'someone is typing' alert, toggleable
-            $("#sendbox").keydown(function(event)  {
+                // watch textarea for key presses
+                // TODO 'someone is typing' alert, toggleable
+                $("#sendie").keydown(function(event)  {
 
-                var key = event.which;
+                    var key = event.which;
 
-                //all keys including return.
-                if (key >= 33) {
+                    //all keys including return.
+                    if (key >= 33) {
 
-                    var maxLength = $(this).attr("maxlength");
-                    var length = this.value.length;
+                        var maxLength = $(this).attr("maxlength");
+                        var length = this.value.length;
 
-                    //don't allow new content if length is maxed out
-                    if (length >= maxLength) {
-                        event.preventDefault();
+                        //don't allow new content if length is maxed out
+                        if (length >= maxLength) {
+                            event.preventDefault();
+                        }
                     }
-                }
+                });
+
+                    //watch textarea for key release
+                $("#sendie").keyup(function(e) {
+
+                    if (e.keyCode == 13) {
+
+                        var text = $(this).val();
+                        var maxLength = $(this).attr("maxlength");
+                        var length = text.length;
+
+                        // send
+                        if (length <= maxLength + 1) {
+                            chat.send(text, name);
+                            $(this).val("");
+                        } else {
+                            $(this).val(text.substring(0, maxLength));
+                        }
+                    }
+                });
             });
 
-                //watch textarea for key release
-            $("#sendbox").keyup(function(e) {
-
-                if (e.keyCode == 13) {
-
-                    var text = $(this).val();
-                    var maxlength = $(this).attr("maxlength");
-                    var length = text.length;
-
-                    // send
-                    if (length <= maxLength + 1) {
-                        chat.send(text, name);
-                        $(this).val("");
-                    } else {
-                        $(this).val(text.substring(0, maxLength));
-                    }
-                }
-            });
+            setInterval('chat.update()',1000);
         });
     </script>
 </head>
 
-<body onload="setInterval('chat.update()',1000)">
+<body>
     <div id="wrapper">
         <header>
             <nav>Test | Things | All | Go | Here</nav>
@@ -96,10 +91,10 @@
         All Things Must be Tested.</div>
 
         <div id="chat">
-            <p id="username"></p>
-            <div id="chatlog">Initial Text</div>
-            <form id="message-send">
-                <textarea id="sendbox" maxlength='300'>Enter a message here.</textarea>
+            <p id="name-area">Test</p>
+            <div id="chat-area">Initial Text</div>
+            <form id="send-message-area">
+                <textarea id="sendie" maxlength='300'>Enter a message here.</textarea>
             </form>
         </div>
         <div id="command">We're not kidding here.</div>

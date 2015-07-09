@@ -20,7 +20,7 @@ function getStateOfChat() {
         block = true;
         $.ajax({
             type: "POST",
-            url: "chat/process.php",
+            url: "process.php",
             data: {  
                 'function': 'getState', 
                 'file': file
@@ -35,13 +35,14 @@ function getStateOfChat() {
     }
 }
 
-/*Updates the chat.**Gets all new data from the server and appends it to the local chat log.*/
+/*Updates the chat.
+**Gets all new data from the server and appends it to the local chat log.*/
 function updateChat() {
     if (!block) {
         block = true;
         $.ajax({
             type: "POST",
-            url: "chat/process.php",
+            url: "process.php",
             data: {
                 'function': 'update', 
                 'state': state, 
@@ -51,10 +52,10 @@ function updateChat() {
             success: function(data) {
                 if(data.text){
                     for (var i = 0; i < data.text.length; i++) {
-                              $('#chatlog').append($("<p>"+ data.text[i] +"</p>")); //Workhorse: appends new lines with empty spaces between lines.
+                              $('#chat-area').append($("<p>"+ data.text[i] +"</p>")); //Workhorse: appends new lines with empty spaces between lines.
                     }
                 }
-                document.getElementById('chatlog').scrollTop = document.getElementById('chatlog').scrollHeight;
+                document.getElementById('chat-area').scrollTop = document.getElementById('chat-area').scrollHeight;
                 block = false;
                 state = data.state;
             },
@@ -71,7 +72,7 @@ function sendChat(message, nickname)
     updateChat();
     $.ajax({
         type: "POST",
-        url: "chat/process.php",
+        url: "process.php",
         data: {
             'function': 'send',
             'message': message, 

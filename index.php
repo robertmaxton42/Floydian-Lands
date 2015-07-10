@@ -87,9 +87,6 @@
         <header>
             <nav>Test | Things | All | Go | Here</nav>
         </header>
-        <div id="gargoyle"><img src="http://i.imgur.com/KPGUhid.jpg?1" /><br />
-        All Things Must be Tested.</div>
-
         <div id="chat">
             <p id="name-area">Test</p>
             <div id="chat-area">Initial Text</div>
@@ -97,7 +94,11 @@
                 <textarea id="sendie" maxlength='300'>Enter a message here.</textarea>
             </form>
         </div>
-        <div id="command">We're not kidding here.</div>
+        <div id="leftpane">
+            <div id="gargoyle"><img src="http://i.imgur.com/KPGUhid.jpg?1" /></div>
+            
+            <div id="command">We're not kidding here.</div>
+        </div>
     </div>
 </body>
 </html>

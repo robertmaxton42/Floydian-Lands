@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-    <script type="text/javascript" src="chat.js"></script>
+    <script type="text/javascript" src="chat/chat.js"></script>
     <script type="text/javascript">
         $("document").ready(function(){
 
@@ -40,7 +40,7 @@
 
                 // watch textarea for key presses
                 // TODO 'someone is typing' alert, toggleable
-                $("#sendie").keydown(function(event)  {
+                $("#sendbox").keydown(function(event)  {
 
                     var key = event.which;
 
@@ -58,7 +58,7 @@
                 });
 
                     //watch textarea for key release
-                $("#sendie").keyup(function(e) {
+                $("#sendbox").keyup(function(e) {
 
                     if (e.keyCode == 13) {
 
@@ -88,10 +88,10 @@
             <nav>Test | Things | All | Go | Here</nav>
         </header>
         <div id="chat">
-            <p id="name-area">Test</p>
-            <div id="chat-area">Initial Text</div>
-            <form id="send-message-area">
-                <textarea id="sendie" maxlength='300'>Enter a message here.</textarea>
+            <p id="name-area"></p>
+            <div id="chatlog"></div>
+            <form id="chat-send-area">
+                <textarea id="sendbox" maxlength='300'>Enter a message here.</textarea>
             </form>
         </div>
         <div id="leftpane">

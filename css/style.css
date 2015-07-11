@@ -28,7 +28,7 @@ nav {
 #leftpane {
     float: left;
     width: calc(67% - 1vw);
-    height: 100%;
+    height: calc(100% - 50px);
     margin-right: 1vw;
     display: flex;
     flex-direction: column;
@@ -63,12 +63,37 @@ nav {
     float: right;
 }
 
-#chat-area {
+#chatlog {
     background-color: #BBB;
     border: 3px inset black;
+    height: calc(90% - 12px);
+    padding: 5px 1px 5px 1px;
+    overflow: auto;
+}
+
+#chat-send-area{
+    height: 10%;
+}
+
+#sendbox {
+    display: block;
+    width: calc(100% - 0.5vw);
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #command {
     background-color: #999;
     flex: 1;
+}
+
+span.usernames {
+    background-color: #663;
+    color: #fa9f00;
+    font: Helvetica, Sans-Serif; 
+    padding: 4px 8px; 
+    -moz-border-radius: 5px; 
+    -webkit-border-radius: 8px; 
+    margin: 30px 5px 0 0;
 }

@@ -3,6 +3,10 @@ Code derived from tutorial at
 https://css-tricks.com/jquery-php-chat/
 */
 
+var processloc = "/robert/chat/process.php";
+var logid = "chatlog";
+var logidhash = "#" + logid;
+
 var block = false;
 var state;
 var mes;
@@ -20,7 +24,7 @@ function getStateOfChat() {
         block = true;
         $.ajax({
             type: "POST",
-            url: "process.php",
+            url: processloc,
             data: {  
                 'function': 'getState', 
                 'file': file
@@ -42,7 +46,7 @@ function updateChat() {
         block = true;
         $.ajax({
             type: "POST",
-            url: "process.php",
+            url: processloc,
             data: {
                 'function': 'update', 
                 'state': state, 
@@ -52,10 +56,10 @@ function updateChat() {
             success: function(data) {
                 if(data.text){
                     for (var i = 0; i < data.text.length; i++) {
-                              $('#chat-area').append($("<p>"+ data.text[i] +"</p>")); //Workhorse: appends new lines with empty spaces between lines.
+                              $(logidhash).append($("<p>"+ data.text[i] +"</p>")); //Workhorse: appends new lines.
                     }
                 }
-                document.getElementById('chat-area').scrollTop = document.getElementById('chat-area').scrollHeight;
+                document.getElementById(logid).scrollTop = document.getElementById(logid).scrollHeight;
                 block = false;
                 state = data.state;
             },
@@ -72,7 +76,7 @@ function sendChat(message, nickname)
     updateChat();
     $.ajax({
         type: "POST",
-        url: "process.php",
+        url: processloc,
         data: {
             'function': 'send',
             'message': message, 

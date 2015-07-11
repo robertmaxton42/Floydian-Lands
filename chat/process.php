@@ -4,21 +4,23 @@
 
     $log = array();
 
-    echo "<script type='text/javascript'>alert('Really annoying pop-up!');</script>";
-
     switch ($function) {
+
         #Evaluate getStateOfChat()
-        case('getState'):             #If the chat log already exists, return the number of lines in the log.             #Otherwise, return array init (zero)
-            if (file_exists('chat.txt')) {
-                $lines = file('chat.txt');
+        case('getState'):
+            #If the chat log already exists, return the number of lines in the log.
+            #Otherwise, return array init (zero)
+            if (file_exists('log.txt')) {
+                $lines = file('log.txt');
             }
             $log['state'] = count($lines);
             break;
 
-        case('update'): #Evaluate updateChat()
+        #Evaluate updateChat()
+        case('update'): 
             $state = $_POST['state'];
-            if (file_exists('chat.txt')) {
-                $lines = file('chat.txt');
+            if (file_exists('log.txt')) {
+                $lines = file('log.txt');
             }
             $count = count($lines);
             if ($state == $count) {
@@ -26,14 +28,17 @@
                 #Return no text.
                 $log['state'] = $state;
                 $log['text'] = false;
-            } else {                 #New text. Feed it to the POST.
+            } else {
+                #New text. Feed it to the POST.
                 $text = array();
                 $log['state'] = $state + count($lines) - $state; #Return updated line count in passed datatype.
                 foreach ($lines as $line_num => $line) {
                     #Jump to the end of the passed local log and start reading lines.
                     if ($line_num >= $state) {
                         $text[] =  $line = str_replace("\n", "", $line);
-                        #Sanitization.                        #TODO Sanitize more thoroughly.                        #TODO Handle exotic characters?
+                        #Sanitization.
+                        #TODO Sanitize more thoroughly.
+                        #TODO Handle exotic characters?
                     }
                 }
                 $log['text'] = $text;
@@ -42,9 +47,11 @@
 
         #Evaluate sendChat()
         case('send'):
-            $nickname = htmlentities(strip_tags($_POST['nickname']));#Convert URLs to links.#TODO Handle colors.#TODO Handle server commands - /nick, /whois#TODO Make link replacement, <b>/<i> stripping toggleable (for command chat)
-             $reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
-            $message = htmlentities(strip_tags($_POST['message']));#, '<i><b>'));
+            $nickname = htmlentities(strip_tags($_POST['nickname']));
+            #TODO Handle colors, bold, italics.
+            #TODO Handle server commands - /nick, /whois
+            $reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
+            $message = htmlentities(strip_tags($_POST['message']));
             if (($message) != "\n") {
 
                 if (preg_match($reg_exUrl, $message, $url)) {
@@ -52,7 +59,7 @@
                 }   
 
                 
-                fwrite(fopen('chat.txt', 'a'), "<span id='chat-message'>". $nickname . "</span>" . $message = str_replace("\n", " ", $message) . "\n");
+                fwrite(fopen('log.txt', 'a'), "<span class='usernames'>". $nickname . "</span>" . $message = str_replace("\n", " ", $message) . "\n");
             }
            break;
 

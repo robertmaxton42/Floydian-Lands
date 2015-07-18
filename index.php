@@ -32,7 +32,7 @@
             $("#name-area").html("You are: <span id='username'>" + name + "</span>");
 
             //start chat
-            var chat = new Chat(TypeEnum.CHAT);
+            var chat = new Chat(TypeEnum.CHAT, "chatlog");
 
             $(function() {
 

@@ -6,10 +6,6 @@ https://css-tricks.com/jquery-php-chat/
 //Location of proccess.php
 var processloc = "/robert/chat/process.php"; 
 
-//HTML ID of chatlog
-var logid = "chatlog";
-var logidhash = "#" + logid;
-
 var TypeEnum = Object.freeze({CMD: 0, CHAT: 1});
 
 var block = false;
@@ -17,11 +13,12 @@ var state;
 var mes;
 var file;
 
-function Chat (type) {
+function Chat (type, logid) {
     this.update = updateChat;
     this.send = sendChat;
     this.getState = getStateOfChat;
     this.chattype = type;
+    this.logid = logid;
 }
 
 /*Gets the state of the chat.**Asks the server for the number of lines in the remote chat log.*/
@@ -50,6 +47,7 @@ function getStateOfChat() {
 /*Updates the chat.
 **Gets all new data from the server and appends it to the local chat log.*/
 function updateChat(type) {
+    id = this.logid;
     if (!block) {
         block = true;
         $.ajax({
@@ -65,10 +63,10 @@ function updateChat(type) {
             success: function(data) {
                 if(data.text){
                     for (var i = 0; i < data.text.length; i++) {
-                              $(logidhash).append($("<p class='chatlines'>"+ data.text[i] +"</p>")); //Workhorse: appends new lines.
+                              $("#" + id).append($("<p class='chatlines'>"+ data.text[i] +"</p>")); //Workhorse: appends new lines.
                     }
                 }
-                document.getElementById(logid).scrollTop = document.getElementById(logid).scrollHeight;
+                document.getElementById(id).scrollTop = document.getElementById(id).scrollHeight;
                 block = false;
                 state = data.state;
             },

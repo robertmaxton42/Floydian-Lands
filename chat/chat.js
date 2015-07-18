@@ -46,8 +46,7 @@ function getStateOfChat() {
 
 /*Updates the chat.
 **Gets all new data from the server and appends it to the local chat log.*/
-function updateChat(type) {
-    id = this.logid;
+function updateChat(type, logid) {
     if (!block) {
         block = true;
         $.ajax({
@@ -63,10 +62,10 @@ function updateChat(type) {
             success: function(data) {
                 if(data.text){
                     for (var i = 0; i < data.text.length; i++) {
-                              $("#" + id).append($("<p class='chatlines'>"+ data.text[i] +"</p>")); //Workhorse: appends new lines.
+                              $("#" + logid).append($("<p class='chatlines'>"+ data.text[i] +"</p>")); //Workhorse: appends new lines.
                     }
                 }
-                document.getElementById(id).scrollTop = document.getElementById(id).scrollHeight;
+                document.getElementById(logid).scrollTop = document.getElementById(logid).scrollHeight;
                 block = false;
                 state = data.state;
             },
@@ -74,7 +73,7 @@ function updateChat(type) {
     }
     else {
     //    alert("Blocking Update"); //Debug code
-        setTimeout(updateChat(type), 1500);//If busy, run again in 1.5s   
+        setTimeout(updateChat(type, logid), 1500);//If busy, run again in 1.5s   
     }
 }
 
@@ -82,7 +81,8 @@ function updateChat(type) {
 function sendChat(message, nickname) 
 {
     type = this.chattype;
-    updateChat(type);
+    id = this.logid;
+    updateChat(type, id);
     $.ajax({
         type: "POST",
         url: processloc,
@@ -95,7 +95,7 @@ function sendChat(message, nickname)
               },
         dataType: "json",
         success: function(data){
-            updateChat(type);
+            updateChat(type, id);
         },
     });
 }

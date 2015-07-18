@@ -28,11 +28,12 @@
             //strip tags
             name = name.replace(/(<([^>]+)>)/ig,"");
 
-            //display name on page
+            //display name on page (Unused)
             $("#name-area").html("You are: <span id='username'>" + name + "</span>");
 
             //start chat
-            var chat = new Chat(TypeEnum.CHAT, "chatlog");
+            var chatlogid = "chatlog"
+            var chat = new Chat(TypeEnum.CHAT, chatlogid);
 
             $(function() {
 
@@ -77,7 +78,7 @@
                 });
             });
 
-            setInterval(chat.update, 1000, 1);
+            setInterval(chat.update, 1000, 1, chatlogid);
         });
     </script>
 </head>

@@ -32,7 +32,7 @@
             $("#name-area").html("You are: <span id='username'>" + name + "</span>");
 
             //start chat
-            var chat = new Chat();
+            var chat = new Chat(TypeEnum.CHAT);
 
             $(function() {
 
@@ -77,7 +77,7 @@
                 });
             });
 
-            setInterval('chat.update()',1000);
+            setInterval(chat.update, 1000, 1);
         });
     </script>
 </head>
@@ -88,7 +88,7 @@
             <nav>Test | Things | All | Go | Here</nav>
         </header>
         <div id="chat">
-            <p id="name-area"></p>
+            <!--<p id="name-area"></p>-->
             <div id="chatlog"></div>
             <form id="chat-send-area">
                 <textarea id="sendbox" maxlength='300'>Enter a message here.</textarea>
@@ -97,7 +97,12 @@
         <div id="leftpane">
             <div id="gargoyle"><img src="http://i.imgur.com/KPGUhid.jpg?1" /></div>
             
-            <div id="command">We're not kidding here.</div>
+            <div id="command">
+                <div id="cmdlog"></div>
+                <form id="cmd-send-area">
+                    <b>&gt;</b><textarea id="cmdbox" maxlength='300'></textarea>
+                </form>
+            </div>
         </div>
     </div>
 </body>

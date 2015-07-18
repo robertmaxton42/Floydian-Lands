@@ -1,17 +1,18 @@
 <?php
 
     $function = $_POST['function'];
+    $ctype = $_POST['type'];
+    $fname = ($ctype == 0) ? 'cmdlog.txt' : 'chatlog.txt';
 
     $log = array();
-
     switch ($function) {
 
         #Evaluate getStateOfChat()
         case('getState'):
             #If the chat log already exists, return the number of lines in the log.
             #Otherwise, return array init (zero)
-            if (file_exists('log.txt')) {
-                $lines = file('log.txt');
+            if (file_exists($fname)) {
+                $lines = file($fname);
             }
             $log['state'] = count($lines);
             break;
@@ -19,8 +20,9 @@
         #Evaluate updateChat()
         case('update'): 
             $state = $_POST['state'];
-            if (file_exists('log.txt')) {
-                $lines = file('log.txt');
+           
+            if (file_exists($fname)) {
+                $lines = file($fname);
             }
             $count = count($lines);
             if ($state == $count) {
@@ -50,6 +52,7 @@
             $nickname = htmlentities(strip_tags($_POST['nickname']));
             #TODO Handle colors, bold, italics.
             #TODO Handle server commands - /nick, /whois
+            #TODO Split based on chat type - commands should not accept hypertext
             $reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
             $message = htmlentities(strip_tags($_POST['message']));
             if (($message) != "\n") {
@@ -59,7 +62,7 @@
                 }   
 
                 
-                fwrite(fopen('log.txt', 'a'), "<span class='usernames'>". $nickname . "</span>" . $message = str_replace("\n", " ", $message) . "\n");
+                fwrite(fopen($fname, 'a'), "<span class='usernames'>". $nickname . "</span>" . $message = str_replace("\n", " ", $message) . "\n");
             }
            break;
 

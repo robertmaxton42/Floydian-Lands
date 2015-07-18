@@ -78,14 +78,9 @@ nav {
 #sendbox {
     display: block;
     width: calc(100% - 0.5vw);
-    height: 100%;
+    height: calc(100% - 1.5vh);
     margin-left: auto;
     margin-right: auto;
-}
-
-#command {
-    background-color: #999;
-    flex: 1;
 }
 
 span.usernames {
@@ -95,5 +90,32 @@ span.usernames {
     padding: 4px 8px; 
     -moz-border-radius: 5px; 
     -webkit-border-radius: 8px; 
-    margin: 30px 5px 0 0;
+}
+
+p.chatlines {
+    margin: 2px 5px 12px 0;
+}
+
+#command {
+    background-color: #999;
+    flex: 1;
+}
+
+#cmdlog {
+    background-color: #BBB;
+    border: 3px inset black;
+    height: calc(85% - 12px);
+    padding: 5px 1px 5px 1px;
+}
+
+#cmd-send-area{
+    height: calc(15% - 1.5vh);
+}
+
+#cmdbox {
+    display: block;
+    float: right;
+    width: calc(100% - 1.5vw);
+    height: 100%;
+    overflow: auto;
 }

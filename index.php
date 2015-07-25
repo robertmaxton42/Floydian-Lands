@@ -35,47 +35,51 @@
             var chatlogid = "chatlog"
             var chat = new Chat(TypeEnum.CHAT, chatlogid);
 
+            // watch textarea for key presses
+            // TODO 'someone is typing' alert, toggleable
+            function downhandler(e) {
+
+                var key = e.which;
+
+                //all keys including return.
+                if (key >= 33) {
+
+                    var maxLength = $(this).attr("maxlength");
+                    var length = this.value.length;
+
+                    //don't allow new content if length is maxed out
+                    if (length >= maxLength) {
+                        e.preventDefault();
+                    }
+                }
+            }
+
+            //watch textarea for key release
+            function uphandler(e) {
+
+                if (e.keyCode == 13) {
+
+                    var text = $(this).val();
+                    var maxLength = $(this).attr("maxlength");
+                    var length = text.length;
+
+                    // send
+                    if (length <= maxLength + 1) {
+                        chat.send(text, name);
+                        $(this).val("");
+                    } else {
+                        $(this).val(text.substring(0, maxLength));
+                    }
+                }
+            }
+
             $(function() {
 
                 chat.getState();
 
-                // watch textarea for key presses
-                // TODO 'someone is typing' alert, toggleable
-                $("#sendbox").keydown(function(event)  {
+                $("#sendbox").keydown(downhandler);
 
-                    var key = event.which;
-
-                    //all keys including return.
-                    if (key >= 33) {
-
-                        var maxLength = $(this).attr("maxlength");
-                        var length = this.value.length;
-
-                        //don't allow new content if length is maxed out
-                        if (length >= maxLength) {
-                            event.preventDefault();
-                        }
-                    }
-                });
-
-                    //watch textarea for key release
-                $("#sendbox").keyup(function(e) {
-
-                    if (e.keyCode == 13) {
-
-                        var text = $(this).val();
-                        var maxLength = $(this).attr("maxlength");
-                        var length = text.length;
-
-                        // send
-                        if (length <= maxLength + 1) {
-                            chat.send(text, name);
-                            $(this).val("");
-                        } else {
-                            $(this).val(text.substring(0, maxLength));
-                        }
-                    }
-                });
+                $("#sendbox").keyup(uphandler);
             });
 
             setInterval(chat.update, 1000, 1, chatlogid);

@@ -96,6 +96,11 @@ p.chatlines {
     margin: 2px 5px 12px 0;
 }
 
+p.chaterror {
+    font: monospace, italic;
+    margin: 2px 5px 12px 0;
+}
+
 #command {
     background-color: #999;
     flex: 1;

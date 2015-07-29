@@ -33,7 +33,9 @@
 
             //start chat
             var chatlogid = "chatlog"
+            var cmdlogid = "cmdlog"
             var chat = new Chat(TypeEnum.CHAT, chatlogid);
+            var cmd  = new Chat(TypeEnum.CMD, cmdlogid);
 
             // watch textarea for key presses
             // TODO 'someone is typing' alert, toggleable
@@ -55,34 +57,41 @@
             }
 
             //watch textarea for key release
-            function uphandler(e) {
+            function uphandlercreate(chat) {
+                function uphandler(e) {
 
-                if (e.keyCode == 13) {
+                    if (e.keyCode == 13) {
 
-                    var text = $(this).val();
-                    var maxLength = $(this).attr("maxlength");
-                    var length = text.length;
+                        var text = $(this).val();
+                        var maxLength = $(this).attr("maxlength");
+                        var length = text.length;
 
-                    // send
-                    if (length <= maxLength + 1) {
-                        chat.send(text, name);
-                        $(this).val("");
-                    } else {
-                        $(this).val(text.substring(0, maxLength));
+                        // send
+                        if (length <= maxLength + 1) {
+                            chat.send(text, name);
+                            $(this).val("");
+                        } else {
+                            $(this).val(text.substring(0, maxLength));
+                        }
                     }
                 }
+
+                return uphandler;
             }
 
+            var uphandlerchat = uphandlercreate(chat);
+            var uphandlercmd = uphandlercreate(cmd);
+
             $(function() {
-
-                chat.getState();
-
                 $("#sendbox").keydown(downhandler);
+                $("#sendbox").keyup(uphandlerchat);
 
-                $("#sendbox").keyup(uphandler);
+                $("#cmdbox").keydown(downhandler);
+                $("#cmdbox").keyup(uphandlercmd);
             });
 
-            setInterval(chat.update, 1000, 1, chatlogid);
+            setInterval(chat.update, 1000, chat);
+            setInterval(cmd.update, 1000, cmd);
         });
     </script>
 </head>

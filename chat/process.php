@@ -7,15 +7,6 @@
     $log = array();
     switch ($function) {
 
-        #Evaluate getStateOfChat()
-        case('getState'):
-            #If the chat log already exists, return the number of lines in the log.
-            #Otherwise, return array init (zero)
-            if (file_exists($fname)) {
-                $lines = file($fname);
-            }
-            $log['state'] = count($lines);
-            break;
 
         #Evaluate updateChat()
         case('update'): 

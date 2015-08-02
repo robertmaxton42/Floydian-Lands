@@ -19,6 +19,7 @@
             //ask user for name with popup prompt
             var name = prompt("Enter your chat name:", "Guest");
 
+<<<<<<< HEAD
             //default name is 'Guest'
             //TODO random unique username generation
             if (!name || name === ' ') {
@@ -27,6 +28,12 @@
 
             //strip tags
             name = name.replace(/(<([^>]+)>)/ig,"");
+=======
+
+        //display name on page (sanitized)
+        $("$username").html("You are: <span id='username></span>");
+        $("$username span").text(name)
+>>>>>>> pr/1
 
             //display name on page (Unused)
             $("#name-area").html("You are: <span id='username'>" + name + "</span>");
